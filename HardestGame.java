@@ -14,14 +14,45 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author John Word
+ * @author liam
  */
 public class HardestGame extends JPanel implements KeyListener, MouseListener {
 
     private Timer timer;
     private int frameCount = 0;
+    private Player player;
+    private Border room;
+    private Enemy enemy1;
+    private Enemy enemy2;
+    private Goal finish;
+    private Goal start;
+    /*5.a. Declare these variables:
+    ? What is the correct data type for each?
+    -leftWall
+    -rightWall
+    -topWall
+    -leftWall
+    -enemy1
+    -enemy2
+    -start
+    -finish
+    */
     
     public HardestGame() {
+        this.player = new Player(5,300);
+        this.enemy1 = new Enemy(200, 300, 0, 20);
+        this.enemy2 = new Enemy(400, 300, 0, -20);
+        this.room = new Border(0, 0, 783, 560);
+        this.finish = new Goal(727, 5, 50, 550, true);
+        this.start = new Goal(5, 5, 50, 550, false);
+
+        /*5.b initialize all variables from 5.a
+        ? What values need to be passed to the constructor?
+        -walls form a simple rectangle
+        -enemies somewhat in the middle but spaced apart
+        -start on left side, finish on right
+        -player actually is inside start
+        */
         timer = new Timer();
         timer.scheduleAtFixedRate(new ScheduleTask(), 100, 1000/12);
     }
@@ -32,14 +63,16 @@ public class HardestGame extends JPanel implements KeyListener, MouseListener {
         
         frameCount++;
         
-        this.setBackground(Color.BLUE);		
-        g.setColor(Color.RED);
+        this.setBackground( Color.CYAN );		
         
-        int x = frameCount;
-        int y = 100;
-        int size = 50;             
-
-        g.fillRect(x, y, size, size); 		
+ 
+        //5.c. draw all objects
+        room.draw(g);
+        enemy1.draw(g);
+        enemy2.draw(g);
+        finish.draw(g);
+        start.draw(g);
+        player.draw(g);
     }
      
     private class ScheduleTask extends TimerTask {
@@ -98,5 +131,4 @@ public class HardestGame extends JPanel implements KeyListener, MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
     }
-    
 }
